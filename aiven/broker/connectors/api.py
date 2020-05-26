@@ -39,10 +39,18 @@ class BrokerConnector(ABC):
         """
         ...
 
+    @abstractmethod
+    def close(self) -> None:
+        """
+        Close the connection if needed, tidy up
+        """
+        ...
+
 
 # Another way, maybe nicer/more modern way would be:
 #
 # from typing import Protocol, ContextManager, runtime_checkable
+#
 #
 # @runtime_checkable
 # class BrokerConnector(Protocol, ContextManager):
@@ -66,9 +74,15 @@ class BrokerConnector(ABC):
 #         """
 #         ...
 #
-#     def consume(self) -> str:
+#     def consume(self) -> None:
 #         """
 #         Consume messages from the topic/queue, endlessly
+#         """
+#         ...
+#
+#     def close(self) -> None:
+#         """
+#         Close the connection if needed, tidy up
 #         """
 #         ...
 #

@@ -27,27 +27,37 @@ class Kafka(BrokerConnector):
         uri: where to connect, i.e. where the broker service is
         topic: the topic queue, one only for now
         """
-        self.url = uri
+        self.uri = uri
+
         self.topic = topic
-        self.producer = producer and KafkaProducer(bootstrap_servers=[uri])
+        self.producer = producer and KafkaProducer(
+            bootstrap_servers=uri,
+            security_protocol='SSL',
+            ssl_check_hostname=True,
+            ssl_cafile='../kafka-pynchia/ca.pem',
+            ssl_certfile='../kafka-pynchia/service.cert',
+            ssl_keyfile='../kafka-pynchia/service.key'
+        )
     
     def publish(self, msg: str):
-        if self.producer:
             try:
-                self.producer.send(self.topic, value=msg)
+                self.producer.send(self.topic, value=msg.encode())
                 log.info(msg)
             except KafkaTimeoutError as err:
                 raise PublishError(err)
-        else:
-            raise PublishError("A consumer doesnt publish with this implementation")
+            except AttributeError:
+                raise PublishError("A consumer cannot publish with this implementation")
 
     def subscribe(self, callback):
         self.callback = callback
         self.consumer = KafkaConsumer(
             self.topic,
-            bootstrap_servers=[self.uri]
+            bootstrap_servers=self.uri
         )
 
     def consume(self):
         for msg in self.consumer:
             self.callback(msg.value)
+
+    def close(self):
+        pass
