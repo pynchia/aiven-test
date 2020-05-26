@@ -8,8 +8,9 @@ from aiven.producer.main import main
 
 
 DEFAULT_TOPIC = 'webmetrics'
-DEFAULT_FREQ = 5  # in seconds
 DEFAULT_WEBSITE = 'http://www.example.com/'
+DEFAULT_DELAY = 5  # in seconds
+DEFAULT_PATTERN = None
 
 
 logging.basicConfig()
@@ -27,15 +28,18 @@ log.setLevel(logging.ERROR)
     "--website", "-w", default=DEFAULT_WEBSITE, help="The website to check"
 )
 @click.option(
-    "--freq", "-f", default=DEFAULT_FREQ, help="Frequency of checks (s)"
+    "--delay", "-d", default=DEFAULT_DELAY, help="Delay between checks (s)"
+)
+@click.option(
+    "--pattern", "-p", default=DEFAULT_PATTERN, help="Pattern to search in page (regex)"
 )
 @click.option(
     "--verbose", "-v", is_flag=True, default=False, help="Log at debug level"
 )
-def cli(kafka, topic, website, freq, verbose):
+def cli(kafka, topic, website, delay, pattern, verbose):
     if verbose:
         log.setLevel(logging.INFO)
-    main(kafka, topic, website, freq)
+    main(kafka, topic, website, delay, pattern)
 
 
 if __name__ == '__main__':
