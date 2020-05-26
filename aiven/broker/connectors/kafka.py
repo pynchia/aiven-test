@@ -4,13 +4,13 @@ from kafka.errors import KafkaTimeoutError
 from kafka import KafkaProducer, KafkaConsumer
 
 from aiven.broker.connectors.api import BrokerConnector, PublishError
-# or, if it were implemented as a protocol:
+# or, if it were implemented as a protocol (see below and api.py):
 # from aiven.broker.connectors.api import BrokerConnector, PublishError, implements
 
 
 log = logging.getLogger()
 
-# the nicer/modern way (see ap.py) would be
+# A nicer/more modern way (see api.py) could be:
 # @implements(BrokerConnector)
 # class Kafka:
 class Kafka(BrokerConnector):
