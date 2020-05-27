@@ -1,5 +1,5 @@
 """
-The command line interface to the Meter application
+The command line interface to the Producer application
 """
 
 import click
@@ -19,13 +19,13 @@ log.setLevel(logging.ERROR)
 
 @click.command()
 @click.option(
-    "--kafka", "-k", required=True, help="Full address and credentials to the kafka service"
+    "--kafka-uri", "-k", required=True, help="Full address and credentials to the kafka service"
 )
 @click.option(
     "--topic", "-t", default=DEFAULT_TOPIC, help="Name of the topic"
 )
 @click.option(
-    "--website", "-w", default=DEFAULT_WEBSITE, help="The website to check"
+    "--web-uri", "-w", default=DEFAULT_WEBSITE, help="The website to check"
 )
 @click.option(
     "--delay", "-d", default=DEFAULT_DELAY, help="Delay between checks (s)"
@@ -36,10 +36,10 @@ log.setLevel(logging.ERROR)
 @click.option(
     "--verbose", "-v", is_flag=True, default=False, help="Log at debug level"
 )
-def cli(kafka, topic, website, delay, pattern, verbose):
+def cli(kafka_uri, topic, web_uri, delay, pattern, verbose):
     if verbose:
         log.setLevel(logging.INFO)
-    main(kafka, topic, website, delay, pattern)
+    main(kafka_uri, topic, web_uri, delay, pattern)
 
 
 if __name__ == '__main__':

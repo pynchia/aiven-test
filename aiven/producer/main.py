@@ -1,9 +1,9 @@
 """
-The main module of the producer application
+The main module of the Producer application
 """
 
 import logging
-from aiven.producer.check import generate_metrics
+from aiven.producer.generate import generate_metrics
 from aiven.broker.connectors.kafka import Kafka
 from aiven.broker.services.broker import Broker
 

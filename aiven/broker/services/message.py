@@ -17,7 +17,7 @@ class Message(NamedTuple):
     pattern_ack: bool  # if the pattern was found on the page
 
     @classmethod
-    def parse(cls, msg):
+    def parse(cls, msg: str):
         """
         Parse the incoming string msg into a structured message
         Return:
@@ -32,7 +32,7 @@ class Message(NamedTuple):
 
     def __str__(self):
         """
-        The msg as stringified json:
+        The msg serialised as json:
             '{
                 "timestamp": timestamp (in the above string format),
                 "elapsed": 123,

@@ -10,14 +10,14 @@ from aiven.broker.services.message import Message
 TIMEOUT = 5  # max number of seconds to wait for a response
 
 
-def generate_metrics(website: str, delay: int, pattern: str):
+def generate_metrics(web_uri: str, delay: int, pattern: str):
     """
     Generate the metrics by checking the website is up
     Params:
-        website - the uri of the website to check
+        web_uri - the uri of the website to check
         freq - Frequency in seconds between checks
         pattern - the pattern to search in the response (regex string)
-    Yields: the metrics message
+    Yields: the metrics message, as a string
     """
 
     def is_pattern_present(content):
@@ -27,7 +27,7 @@ def generate_metrics(website: str, delay: int, pattern: str):
         """
         Poll the website to monitor its availability
         """
-        response = requests.get(website, timeout=TIMEOUT)
+        response = requests.get(web_uri, timeout=TIMEOUT)
         return (
             response.elapsed.total_seconds(),
             response.status_code,
