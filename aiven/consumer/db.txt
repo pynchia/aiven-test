@@ -1,0 +1,20 @@
+
+# Useful SQL fixtures
+
+# Create the table which holds the metrics
+
+CREATE TABLE METRICS(
+   ID  SERIAL PRIMARY KEY,
+   TIMESTAMP      CHAR(20) NOT NULL,
+   ELAPSED        REAL NOT NULL,
+   STATUS         INT NOT NULL,
+   PATTERN_ACK    BOOLEAN NOT NULL
+);
+
+
+# In case we used another pg user instead of admin
+
+GRANT ALL PRIVILEGES ON SCHEMA PUBLIC TO web;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO web;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO web;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO web;

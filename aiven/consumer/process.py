@@ -22,16 +22,20 @@ class Processor:
     """
     Process the incoming messages from the broker.
     It stores the messages in the PostgreSQL db (such functionality is now hard-wired here
-     but it should be decoupled)
+     but we may want to decouple it)
     """
 
     def __init__(self, db_uri):
-        # self.db = pg.connect(db_uri, )
-        pass
+        self.db_connection = pg.connect(
+            db_uri,
+            # sslmode='verify-full',
+            sslrootcert='../pg-pynchia/ca.pem'
+        )
+        self.db_connection.autocommit = True
 
     def __call__(self, msg: str):
         """
-        Process the incoming msg from the meter
+        Process the incoming msg
         """
         log.info(f"Received msg {msg}")
         try:
@@ -40,11 +44,24 @@ class Processor:
             log.error(e)
         else:
             # add to DB
-            log.info(f"Msg {msg} saved to DB")
+            with self.db_connection.cursor() as cursor:
+                try:
+                    cursor.execute("""
+                        INSERT INTO metrics
+                        (timestamp, elapsed, status, pattern_ack)
+                        values (%s, %s, %s, %s);""",
+                        (message.timestamp, message.elapsed, message.status, message.pattern_ack)
+                    )
+                    # print("Query:", cursor.query)
+                except Exception as err:
+                    log.error(err)
+                    print ("Error:", err)
+                else:
+                    log.info(f"Msg {msg} saved to DB")
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> bool:
         # close DB cnx
-        pass
+        self.db_connection.close()
