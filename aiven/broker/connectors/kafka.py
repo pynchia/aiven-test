@@ -18,6 +18,15 @@ class Kafka(BrokerConnector):
     The Kafka concrete implementation of a broker connector
     """
 
+    SSL_OPTIONS = {
+        'security_protocol': 'SSL',
+        'ssl_check_hostname': True,
+        'ssl_cafile': '../kafka-pynchia/ca.pem',
+        'ssl_certfile': '../kafka-pynchia/service.cert',
+        'ssl_keyfile': '../kafka-pynchia/service.key'
+    }
+
+
     def __init__(self,
             uri: str,
             topic: str = '',
@@ -28,20 +37,16 @@ class Kafka(BrokerConnector):
         topic: the topic queue, one only for now
         """
         self.uri = uri
-
         self.topic = topic
         self.producer = producer and KafkaProducer(
             bootstrap_servers=uri,
-            security_protocol='SSL',
-            ssl_check_hostname=True,
-            ssl_cafile='../kafka-pynchia/ca.pem',
-            ssl_certfile='../kafka-pynchia/service.cert',
-            ssl_keyfile='../kafka-pynchia/service.key'
+            **self.SSL_OPTIONS
         )
     
     def publish(self, msg: str):
             try:
                 self.producer.send(self.topic, value=msg.encode())
+                print("publish:", msg)
                 log.info(msg)
             except KafkaTimeoutError as err:
                 raise PublishError(err)
@@ -52,12 +57,16 @@ class Kafka(BrokerConnector):
         self.callback = callback
         self.consumer = KafkaConsumer(
             self.topic,
-            bootstrap_servers=self.uri
+            bootstrap_servers=self.uri,
+            **self.SSL_OPTIONS
         )
 
     def consume(self):
         for msg in self.consumer:
-            self.callback(msg.value)
+            msg_str = msg.value.decode()
+            print("consume:", msg_str)
+            log.info(msg_str)
+            self.callback(msg_str)
 
     def close(self):
         pass

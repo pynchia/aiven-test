@@ -8,6 +8,7 @@ from aiven.broker.services.message import Message
 
 
 TIMEOUT = 5  # max number of seconds to wait for a response
+TIMESTAMP_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 
 def generate_metrics(web_uri: str, delay: int, pattern: str):
@@ -36,7 +37,7 @@ def generate_metrics(web_uri: str, delay: int, pattern: str):
 
     pattern_compiled = re.compile(pattern)
     while True:
-        timestamp = datetime.now()
+        timestamp = datetime.strftime(datetime.now(), TIMESTAMP_FORMAT)
         elapsed, status, pattern_ack = poll_website()
         message = Message(
             timestamp=timestamp,

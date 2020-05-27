@@ -10,7 +10,7 @@ from aiven.producer.main import main
 DEFAULT_TOPIC = 'webmetrics'
 DEFAULT_WEBSITE = 'http://www.example.com/'
 DEFAULT_DELAY = 5  # in seconds
-DEFAULT_PATTERN = None
+DEFAULT_PATTERN = ''
 
 
 logging.basicConfig()

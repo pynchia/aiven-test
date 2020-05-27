@@ -3,9 +3,6 @@ import json
 from typing import NamedTuple
 
 
-TIMESTAMP_FORMAT = '%Y-%m-%d %H:%M:%S'
-
-
 class MessageFormatError(Exception):
     pass
 
@@ -34,12 +31,10 @@ class Message(NamedTuple):
         """
         The msg serialised as json:
             '{
-                "timestamp": timestamp (in the above string format),
+                "timestamp": timestamp string,
                 "elapsed": 123,
                 "status": 200;
                 "pattern_ack": true
             }'
         """
-        msg_d = self._asdict()
-        msg_d['timestamp'] = datetime.strftime(self.timestamp, TIMESTAMP_FORMAT)
-        return json.dumps(msg_d)
+        return json.dumps(self._asdict())
