@@ -52,10 +52,8 @@ class Processor:
                         values (%s, %s, %s, %s);""",
                         (message.timestamp, message.elapsed, message.status, message.pattern_ack)
                     )
-                    # print("Query:", cursor.query)
-                except Exception as err:
+                except (pg.Error, AttributeError) as err:
                     log.error(err)
-                    print ("Error:", err)
                 else:
                     log.info(f"Msg {msg} saved to DB")
 

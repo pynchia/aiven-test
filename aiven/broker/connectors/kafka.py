@@ -46,7 +46,6 @@ class Kafka(BrokerConnector):
     def publish(self, msg: str):
             try:
                 self.producer.send(self.topic, value=msg.encode())
-                print("publish:", msg)
                 log.info(msg)
             except KafkaTimeoutError as err:
                 raise PublishError(err)
@@ -64,7 +63,6 @@ class Kafka(BrokerConnector):
     def consume(self):
         for msg in self.consumer:
             msg_str = msg.value.decode()
-            print("consume:", msg_str)
             log.info(msg_str)
             self.callback(msg_str)
 
