@@ -1,7 +1,7 @@
 import logging
 
+import kafka
 from kafka.errors import KafkaTimeoutError
-from kafka import KafkaProducer, KafkaConsumer
 
 from aiven.broker.connectors.api import BrokerConnector, PublishError
 # or, if it were implemented as a protocol (see below and api.py):
@@ -38,7 +38,7 @@ class Kafka(BrokerConnector):
         """
         self.uri = uri
         self.topic = topic
-        self.producer = producer and KafkaProducer(
+        self.producer = producer and kafka.KafkaProducer(
             bootstrap_servers=uri,
             **self.SSL_OPTIONS
         )
@@ -54,7 +54,7 @@ class Kafka(BrokerConnector):
 
     def subscribe(self, callback):
         self.callback = callback
-        self.consumer = KafkaConsumer(
+        self.consumer = kafka.KafkaConsumer(
             self.topic,
             bootstrap_servers=self.uri,
             **self.SSL_OPTIONS
