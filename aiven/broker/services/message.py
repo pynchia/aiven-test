@@ -24,7 +24,16 @@ class Message(NamedTuple):
             msg_d = json.loads(msg)
             message = cls(**msg_d)
         except (json.JSONDecodeError, TypeError, ValueError):
-            raise MessageFormatError(f"Malformed message received: {msg}")
+            raise MessageFormatError(f"Malformed message: {msg}")
+
+        # Validate the type of field values
+        # unfortunately NamedTuple doesn't allow subclasses to override __init__
+        for attr, val in msg_d.items():
+           if type(val) is not message._field_types[attr]:
+                raise MessageFormatError(
+                    f"Malformed message: {msg}\n"
+                    f"Type of field {attr} is {type(val)} instead of {message._field_types[attr]} "
+                )
         return message
 
     def __str__(self):
