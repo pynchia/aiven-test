@@ -1,0 +1,11 @@
+version: "3.1"
+services:
+    producer:
+        build: .
+        image: aiven:v1
+        command: producercli -k ${KAFKA} -p Domain
+
+    consumer:
+        image: aiven:v1
+        depends_on: [producer, ]
+        command: consumercli -k ${KAFKA} -d ${PG} -v
