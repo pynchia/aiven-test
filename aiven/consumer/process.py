@@ -37,6 +37,7 @@ class Processor:
         """
         Process the incoming msg
         """
+        print('\n***************** Processor called with', msg)
         log.info(f"Received msg {msg}")
         try:
             message = Message.parse(msg)
