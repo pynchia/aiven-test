@@ -1,5 +1,4 @@
 # the build image
-# FROM python:3-slim-buster as pybuild
 FROM python:3.8.0-slim as pybuild
 
 # RUN apt-get update \
@@ -20,7 +19,6 @@ RUN pip install --user .
 CMD ./run-tests.sh
 
 # the production image
-# FROM python:3-slim-buster as app
 FROM python:3.8.0-slim as app
 COPY --from=pybuild /root/.local /root/.local
 COPY --from=pybuild /app/certs app/certs

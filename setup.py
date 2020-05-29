@@ -18,8 +18,7 @@ setup(
         'Programming Language :: Python :: 3'],
     keywords=['aiven', ],
     packages=find_packages(),
-    # packages=['aiven'],
-    include_package_data=True,
+    include_package_data=False,
     zip_safe=False,
     entry_points="""
     [console_scripts]
