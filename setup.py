@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 
 # with open('README.rst') as f:
@@ -17,8 +17,8 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3'],
     keywords=['aiven', ],
-    # packages=find_packages(),
-    packages=['aiven'],
+    packages=find_packages(),
+    # packages=['aiven'],
     include_package_data=True,
     zip_safe=False,
     entry_points="""

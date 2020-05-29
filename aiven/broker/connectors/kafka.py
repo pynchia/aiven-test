@@ -21,9 +21,9 @@ class Kafka(BrokerConnector):
     SSL_OPTIONS = {
         'security_protocol': 'SSL',
         'ssl_check_hostname': True,
-        'ssl_cafile': '../kafka-pynchia/ca.pem',
-        'ssl_certfile': '../kafka-pynchia/service.cert',
-        'ssl_keyfile': '../kafka-pynchia/service.key'
+        'ssl_cafile': 'certs/kafka-pynchia/ca.pem',
+        'ssl_certfile': 'certs/kafka-pynchia/service.cert',
+        'ssl_keyfile': 'certs/kafka-pynchia/service.key'
     }
 
 

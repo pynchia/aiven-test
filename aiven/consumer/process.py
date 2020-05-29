@@ -29,7 +29,7 @@ class Processor:
         self.db_connection = pg.connect(
             db_uri,
             # sslmode='verify-full',
-            sslrootcert='../pg-pynchia/ca.pem'
+            sslrootcert='certs/pg-pynchia/ca.pem'
         )
         self.db_connection.autocommit = True
 
@@ -37,7 +37,6 @@ class Processor:
         """
         Process the incoming msg
         """
-        print('\n***************** Processor called with', msg)
         log.info(f"Received msg {msg}")
         try:
             message = Message.parse(msg)
