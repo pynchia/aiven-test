@@ -1,29 +1,11 @@
-# mh-test
+# Test for Aiven
 
-Test for Aiven
-
-i.e. build a complete project to distribute website monitoring data to consumers via Aiven Kafka and store to Aiven PostgreSQL.
+Build a complete project to distribute website monitoring data to consumers via Aiven Kafka and store to Aiven PostgreSQL.
 
 Producer -> broker -> Consumer -> DB
 
-## Setup
-
-
-## Configuration files
-
-
 ## Execution
 
+Launch both the producer and the consumer with the shell command:
 
-### Producer
-
-
-### Consumer
-
-
-## Testing
-
-Execute the automated tests with
-
-`pytest -s --cov=aiven/`
-
+ `KAFKA='the-kafka-uri' PG='the-postreSQL-uri' docker-compose up`
