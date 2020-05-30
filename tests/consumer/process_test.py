@@ -1,6 +1,5 @@
 """
 Test the consumer
-
 """
 from unittest.mock import MagicMock, patch
 
@@ -20,7 +19,7 @@ def test_processor_context_mgr():
             mock_pg.connect.assert_called_once()
         mock_connect.close.assert_called_once()
 
-# The test below doesn't work, I have tried a long time
+# The test below doesn't work, I have tried for quite a while. The namespace gets owewritte in the module
 #
 # def test_msg_written_to_db(sample_msg_dict, sample_msg_str):
 

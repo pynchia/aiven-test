@@ -28,7 +28,6 @@ def test_service_subscribe_and_consume(sample_msg_str):
     message_queue = []  # the queue of messages, stored elsewhere
 
     def processor(msg):  # the actual callback, the end-user processing the msg
-        # print(f"\nprocessor: {msg}")
         assert msg == sample_msg_str
     def publish(msg):
         message_queue.append(msg)

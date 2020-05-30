@@ -22,7 +22,7 @@ log.setLevel(logging.ERROR)
     "--topic", "-t", default=DEFAULT_TOPIC, help="Name of the topic"
 )
 @click.option(
-    "--db-uri", "-d", required=True, help="Log at debug level"
+    "--db-uri", "-d", required=True, help="Full address and credentials to the postgreSQL service"
 )
 @click.option(
     "--verbose", "-v", is_flag=True, default=False, help="Log at debug level"

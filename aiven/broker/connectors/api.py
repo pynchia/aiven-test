@@ -59,7 +59,7 @@ class BrokerConnector(ABC):
 #     Each broker instance support one queue only
 #
 #     Instantiate with params
-#     url: URI of kafka broker
+#     url: URI of broker
 #     topic: name of topic
 #     """
 #     def publish(self, msg: str) -> None:
