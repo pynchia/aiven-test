@@ -1,6 +1,6 @@
-# Test for Aiven
+# Kafka Test
 
-Build a complete project to distribute website monitoring data to consumers via Aiven Kafka and store to Aiven PostgreSQL.
+Build a complete project to distribute website monitoring data to consumers via Kafka and store it to PostgreSQL.
 
 Producer -> broker -> Consumer -> DB
 
