@@ -10,6 +10,7 @@ COPY . /app
 # Install the application package
 RUN pip install --user .
 # run the tests
+ENV PATH=/root/.local/bin:$PATH
 CMD ./run-tests.sh
 
 # the production image
